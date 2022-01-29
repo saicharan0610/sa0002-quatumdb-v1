@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="sampleL" doc:name="HTTP Listener config" doc:id="bd015a07-4634-4029-bb7c-24c074e91710" basePath="/api/v1/sys" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="sa0002-quatumdb-v1Flow" doc:id="9c422a9c-80bd-4d5d-a94e-319208deef31" >
+		<http:listener doc:name="Listener" doc:id="e5f1b804-46ae-4c44-93e6-5df504a4aba2" config-ref="sampleL" path="/sampleAPI"/>
+		<logger level="INFO" doc:name="Logger" doc:id="41bb82c7-5d81-4b4b-9324-a23b165a4fc5" />
+		<ee:transform doc:name="Transform Message" doc:id="2270b3f8-2b52-407d-a7f7-2bc0efb2b023" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"Result":"Working as expected"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="d0114c61-2ef1-4be1-8408-9055ad5967a7" />
+	</flow>
+</mule>
